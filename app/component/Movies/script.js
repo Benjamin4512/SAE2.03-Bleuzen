@@ -1,7 +1,7 @@
-let templateFile = await fetch("./component/Moives/template.html");
+let templateFile = await fetch("./component/Movies/template.html");
 let template = await templateFile.text();
 
-let NavBar = {};
+let Movies = {};
 
 NavBar.format = function (hAbout, hHome) {
   let html = template;
