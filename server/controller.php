@@ -27,7 +27,7 @@ function addMovieController(){
     return "Le film $name à été ajouté avec succès!";
   }
   else{
-    return "Champs manquant";
+    return false;
   }
 }
 
