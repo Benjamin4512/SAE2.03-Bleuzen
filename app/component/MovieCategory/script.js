@@ -1,12 +1,12 @@
-let templateFile = await fetch("./component/Movie/template.html");
+let templateFile = await fetch("./component/MovieCategory/template.html");
 let template = await templateFile.text();
 
-let templateLiFile = await fetch("./component/Movie/templateLi.html");
+let templateLiFile = await fetch("./component/MovieCategory/templateLi.html");
 let templateLi = await templateLiFile.text();
 
-let Movie = {};
+let MovieCategory = {};
 
-Movie.format = function (data, tab) {
+MovieCategory.format = function (data, tab) {
   if (!data || data.length ===0){
     return '<li class="movie__empty">Aucun film disponible pour le moment.</li>'
   }
@@ -25,7 +25,7 @@ Movie.format = function (data, tab) {
 
     }
 
-    html = html.replaceAll("{{movieItems}}", menuHTML);
+    html = html.replaceAll("{{moviecategoryItems}}", menuHTML);
   
   return html;
 };

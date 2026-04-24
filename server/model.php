@@ -38,3 +38,14 @@ function addMovie($name, $director, $year, $length, $description, $id_category, 
     $res = $stmt->fetchAll(PDO::FETCH_OBJ);
     return $res; 
 }
+
+    function readMovieDetail($id){
+
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql ="SELECT Movie.*, Category.name AS category_name FROM Movie INNER JOIN Category ON Movie.id_category = Category.id WHERE Movie.id = :id";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    $movie = $stmt->fetchAll(PDO::FETCH_OBJ);
+    return $movie;
+    }
