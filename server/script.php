@@ -24,6 +24,10 @@ if ( isset($_REQUEST['todo']) ){
        case 'addMovie':
       $data = addMovieController();
       break;
+
+      case 'addProfile':
+      $data = addProfileController();
+      break;
      
       case 'readMovies':
       $data = readMovieController();
@@ -32,6 +36,16 @@ if ( isset($_REQUEST['todo']) ){
       case 'readMoviesDetail':
       $data = readMovieDetailController();
       break;
+
+      case 'readCategory':
+      $data = readCategoryController();
+      break;
+
+    
+
+      
+
+  
   
     
  

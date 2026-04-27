@@ -15,7 +15,6 @@ DataMovie.requestMoviesDetail = async function (id) {
     let data = await answer.json();
     return data;
     
-
 }
 
 export {DataMovie};

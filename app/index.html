@@ -17,6 +17,8 @@
       import { Movie } from "./component/Movie/script.js";
       import { DataMovie } from "./data/dataMovie.js";
       import { MovieDetail } from "./component/MovieDetail/script.js";
+      import { MovieCategory } from "./component/MovieCategory/script.js";
+      
 
       let movieData = await DataMovie.requestMovies();
       
@@ -64,13 +66,26 @@
 
        V.renderMovie = function (data) {
         let content = document.querySelector("#content");
-        content.innerHTML = Movie.format(data);
+        let finalHtml ="";
+        for (let categoryName in data){
+          let categoryMovie = data[categoryName];
+          finalHtml += MovieCategory.format(categoryName, categoryMovie);
+        }
+        content.innerHTML = finalHtml;
+
       };
 
         V.renderMovieDetail = function (data) {
         let content = document.querySelector("#content");
         content.innerHTML = MovieDetail.format(data);
       };
+
+      
+     /*   V.renderMovieCategory = function (handler, category) {
+        let content = document.querySelector("#content");
+        content.innerHTML = MovieCategory.format(handler, category);
+      };*/
+
 
 
 
