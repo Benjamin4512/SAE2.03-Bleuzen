@@ -3,21 +3,17 @@
         
         <input required type="text" name="nom" placeholder="Nom du Profil">
 
-        <input required type="text" name="avatar" placeholder="Avatar du Profile">
-
-    
-
-      
         <select required name="age_restriction">
-            <option value="">--Restriction d'age--</option>
-            <option value="3">Jeunesse - 8ans</option>
-            <option value="9">Kids - 10 ans</option>
-            <option value="13">Ado - 13 ans</option>
-            <option value="18">Adulte - 18ans</option>
+            <option value="">--Restriction d'âge--</option>
+            <option value="0">Tout public</option>
+            <option value="10">10 ans</option>
+            <option value="12">12 ans</option>
+            <option value="14">14 ans</option>
+            <option value="16">16 ans</option>
+            <option value="18">18 ans</option>
+        </select> 
         
-        </select>
-
-        <input onclick="{{handler}}" type="button" value="Crée un profil" name="todo">
+        <input onclick="{{handler}}" type="button" value="Créer un profil">
 
     </form>
 </div>

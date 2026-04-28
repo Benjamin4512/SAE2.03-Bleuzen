@@ -41,6 +41,11 @@ if ( isset($_REQUEST['todo']) ){
       $data = readCategoryController();
       break;
 
+      case 'readProfile':
+      $data = readProfileController();
+      break;
+
+
     
 
       

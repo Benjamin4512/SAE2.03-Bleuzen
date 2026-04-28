@@ -11,6 +11,7 @@
     <header id="header"></header>
 
     <section id="content"></section>
+    <section id="profile"></section>
 
     <script type="module">
       import { NavBar } from "./component/NavBar/script.js";
@@ -18,6 +19,8 @@
       import { DataMovie } from "./data/dataMovie.js";
       import { MovieDetail } from "./component/MovieDetail/script.js";
       import { MovieCategory } from "./component/MovieCategory/script.js";
+      import { DataProfile } from "./data/dataProfile.js";
+      
       
 
       let movieData = await DataMovie.requestMovies();
@@ -37,17 +40,42 @@
 
       C.handlerHome = async function () {
       let moviedata = await DataMovie.requestMovies(); 
-      V.renderMovie(moviedata); 
-};
- 
+      V.renderMovie(moviedata); };
+
     C.handlerDetail = async function (id) {
     let data = await DataMovie.requestMoviesDetail(id);
     V.renderMovieDetail(data);
     }
-      C.start = function () {
-        V.renderNavBar("C.handlerAbout()," , "C.handlerHome()");
-        V.renderMovie(movieData);
-      };
+
+
+C.handlerProfile = async function() {
+  
+    let ageselect = document.querySelector("#nom").value;
+
+
+    if (ageselect === "") {
+        let content = document.querySelector("#content");
+
+        content.innerHTML = "<h2>Bienvenue, veuillez choisir un profil</h2>";
+    } 
+    else {
+   
+        let listfilms = await DataMovie.requestMovies(ageselect);
+
+        if (listfilms.length === 0) {
+            document.querySelector("#content").innerHTML = "<h2>Aucun film pour cet âge.</h2>";
+        } else {
+            V.renderMovie(listfilms);
+        }
+    }
+};
+
+
+      C.start = async function () {
+    let profiles = await DataProfile.requestProfile();
+    V.renderNavBar("C.handlerAbout()", "C.handlerHome()", profiles);
+    document.querySelector("#content").innerHTML = "<h2>Bienvenue ! Veuillez choisir un profil.</h2>";
+};
 
       // Vue (contient tout ce qui est relatif à l'affichage)
       window.V = {};
@@ -59,9 +87,9 @@
        * Elle sélectionne l'élément HTML avec l'ID "header" et y insère le contenu
        * formaté par le composant NavBar.
        */
-      V.renderNavBar = function (hAbout, hHome) {
-        let header = document.querySelector("#header");
-        header.innerHTML = NavBar.format(hAbout, hHome);
+      V.renderNavBar = function (hAbout, hHome, profiles) {
+        let header = document.querySelector("#profile, #header");
+        header.innerHTML = NavBar.format(hAbout, hHome, profiles);
       };
 
        V.renderMovie = function (data) {

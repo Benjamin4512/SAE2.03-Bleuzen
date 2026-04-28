@@ -4,8 +4,15 @@
 require("model.php");
 
 function readMovieController(){
+
+    $age = 0; 
+  
+    if (isset($_REQUEST['age'])) {
+        $age = $_REQUEST['age'];
+    }
+
  
-    $movies = getAllMovies();
+    $movies = getAllMovies($age);
     $category = [];
     
     foreach ($movies as $mvs){
@@ -50,10 +57,9 @@ function addMovieController(){
 function addProfileController(){
     
   $nom = $_REQUEST['nom'];
-  $avatar = $_REQUEST['avatar'];
   $age_restriction = $_REQUEST['age_restriction'];
   
-  $ok = addProfile($nom, $avatar, $age_restriction);
+  $ok = addProfile($nom, $age_restriction);
 
   if ($ok!=0){
     return "Le profil $nom à été ajouté avec succès!";
@@ -76,18 +82,9 @@ function readMovieDetailController(){
   
 }
 
-function readMovieCategoryController($movies) {
-  
-    $category = []; 
-    foreach($movies as $m) {
-    
-        $cat = $m->category_name;
 
+function readProfileController(){
 
-        $category[$cat][] = $m;
-    }
-
- 
-    return $category;
+  return getAllProfile();
 }
 

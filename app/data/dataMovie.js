@@ -3,9 +3,9 @@ let HOST_URL = "https://mmi.unilim.fr/~bleuzen1/SAE2.03-Bleuzen";//"http://mmi.u
 
 let DataMovie = {};
 
-DataMovie.requestMovies = async function(){
+DataMovie.requestMovies = async function(age = 0){
 
-    let answer = await fetch(HOST_URL + "/server/script.php?todo=readMovies");
+    let answer = await fetch(HOST_URL + "/server/script.php?todo=readMovies&age=" + age);
     let data = await answer.json();
     return data;
 }

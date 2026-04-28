@@ -6,10 +6,11 @@ define("DBLOGIN", "bleuzen1");
 define("DBPWD", "bleuzen1");
 
 
-function getAllMovies(){
+function getAllMovies($age){
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-    $sql = "SELECT Movie.id, Movie.name, Movie.image, Category.name AS category_name FROM Movie, Category WHERE Movie.id_category = Category.id";   
+    $sql = "SELECT Movie.id, Movie.name, Movie.image, Category.name AS category_name FROM Movie, Category WHERE Movie.id_category = Category.id AND Movie.min_age <= :age";   
     $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':age', $age);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_OBJ);
 }
@@ -47,17 +48,16 @@ function addMovie($name, $director, $year, $length, $description, $id_category, 
     return $res; 
 }
 
-function addProfile($nom, $avatar, $age_restriction){
+function addProfile($nom, $age_restriction){
 
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
   
-    $sql = "INSERT INTO Profile (nom, avatar, age_restriction)
-            VALUES (:nom, :avatar, :age_restriction)";
+    $sql = "INSERT INTO Profile (nom, age_restriction)
+            VALUES (:nom, :age_restriction)";
  
     $stmt = $cnx->prepare($sql);
 
     $stmt->bindParam(':nom', $nom);
-    $stmt->bindParam(':avatar', $avatar);
     $stmt->bindParam(':age_restriction', $age_restriction);
   
     $stmt->execute();
@@ -88,4 +88,13 @@ function addProfile($nom, $avatar, $age_restriction){
     
     }
 
+
+
+function getAllProfile(){
+$cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+$sql ="SELECT *FROM Profile";
+$stmt = $cnx->prepare($sql);
+$stmt->execute();
+return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
    
