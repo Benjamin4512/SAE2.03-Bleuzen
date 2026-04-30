@@ -45,7 +45,7 @@
     C.handlerDetail = async function (id) {
     let data = await DataMovie.requestMoviesDetail(id);
     V.renderMovieDetail(data);
-    }
+};
 
 
 C.handlerProfile = async function() {
@@ -70,7 +70,7 @@ C.handlerProfile = async function() {
 
 
 C.handlerLogOut = function() {
-    // 1. On récupère le menu déroulant
+    
     let ageselect = document.querySelector("#nom");
 
     ageselect.value = "";
@@ -78,6 +78,17 @@ C.handlerLogOut = function() {
     C.handlerProfile(); 
 };
 
+
+   C.handlerAddFavoris = async function (id_movie) {
+    let id_profile = DataProfile.activeAge;
+
+    if (id_profile != "") {
+        let message = await DataMovie.addFavoris(id_profile, id_movie);
+        alert(message);
+    } else {
+        alert("Veuillez choisir un profil pour ajouter des favoris.");
+    }
+};
 
 
       C.start = async function () {
@@ -116,6 +127,7 @@ C.handlerLogOut = function() {
         let content = document.querySelector("#content");
         content.innerHTML = MovieDetail.format(data);
       };
+
 
       
      /*   V.renderMovieCategory = function (handler, category) {

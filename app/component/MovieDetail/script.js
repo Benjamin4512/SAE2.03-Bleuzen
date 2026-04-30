@@ -23,7 +23,8 @@ MovieDetail.format = function (data) {
       li = li.replaceAll("{{moviedetailminage}}", movie.min_age);
       li = li.replaceAll("{{moviedetaildescription}}", movie.description);
       li = li.replaceAll("{{moviedetailtrailer}}", movie.trailer);
-      li = li.replaceAll("{{moviedetailicon}}", "../server/images/icon/player-heart.png");
+      li = li.replaceAll("{{moviedetailicon}}", "../server/images/icon/player-heart.svg");
+      li = li.replaceAll("C.handlerAddFavoris()", "C.handlerAddFavoris(" + movie.id + ")");
       menuHTML += li;
 
     }

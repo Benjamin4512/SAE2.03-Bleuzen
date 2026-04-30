@@ -113,3 +113,25 @@ function updateProfile($id, $nom, $age_restriction){
     
     return $stmt->execute(); 
 }
+
+
+function addFavoris($id_profile, $id_movie) {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "INSERT INTO Favoris (id_profile, id_movie) VALUES (:id_profile, :id_movie)";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id_profile', $id_profile);
+    $stmt->bindParam(':id_movie', $id_movie);
+    return $stmt->execute();
+}
+
+
+
+
+function readFavoris($id_profile) {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT Movie.* FROM Movie INNER JOIN Favoris ON Movie.id = Favoris.id_movie WHERE Favoris.id_profile = :id_profile";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id_profile', $id_profile);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}

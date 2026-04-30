@@ -49,6 +49,16 @@ if ( isset($_REQUEST['todo']) ){
       $data = readProfileController();
       break;
 
+      case 'addFavoris':
+      $data = addFavorisController();
+      break;
+
+      case 'readFavoris':
+      $data = readFavorisController();
+      break;
+
+
+
 
     
 

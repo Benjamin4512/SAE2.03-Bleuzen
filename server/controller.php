@@ -101,3 +101,20 @@ function readProfileController(){
   return getAllProfile();
 }
 
+
+function addFavorisController() {
+    $id_profile = $_REQUEST['id_profile'];
+    $id_movie = $_REQUEST['id_movie'];
+    addFavoris($id_profile, $id_movie);
+    
+    return "Le film a été ajouté à vos favoris !";
+}
+
+function readFavorisController() {
+    $id_profile = $_REQUEST['id_profile'];
+    $favoris = readFavoris($id_profile);
+    if($favoris != false){
+
+    return $favoris;
+}
+}

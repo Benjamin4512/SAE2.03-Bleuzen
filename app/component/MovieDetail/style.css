@@ -4,3 +4,14 @@
   aspect-ratio: 2/3;
   object-fit: cover;
 }
+
+.moviedetail__like{
+  cursor: pointer;
+  color: red;
+
+}
+
+.moviedetail__like:hover{
+  width: 2rem;
+
+}
