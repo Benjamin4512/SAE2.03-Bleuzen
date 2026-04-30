@@ -7,4 +7,4 @@
 @import "../component/Log/style.css" layer(components);
 @import "../component/MovieForm/style.css" layer(components);
 @import "../component/ProfileForm/style.css" layer(components);
-
+@import "../component/ProfileEdit/style.css" layer(components);

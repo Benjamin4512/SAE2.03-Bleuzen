@@ -5,14 +5,12 @@ require("model.php");
 
 function readMovieController(){
 
-    $age = 0; 
-  
     if (isset($_REQUEST['age'])) {
-        $age = $_REQUEST['age'];
+        $valueage = $_REQUEST['age'];
+    } else {
+        $valueage = 0; 
     }
-
- 
-    $movies = getAllMovies($age);
+    $movies = getAllMovies($valueage);
     $category = [];
     
     foreach ($movies as $mvs){
@@ -67,6 +65,21 @@ function addProfileController(){
   else{
     return false;
   }
+}
+
+function updateProfileController(){
+  
+    $id = $_REQUEST['id']; 
+    $nom = $_REQUEST['nom'];
+    $age_restriction = $_REQUEST['age_restriction'];
+    
+ 
+    $ok = updateProfile($id, $nom, $age_restriction);
+
+    if ($ok){
+        return "Le profil $nom a été modifié avec succès !";
+    }
+    return false;
 }
 
 

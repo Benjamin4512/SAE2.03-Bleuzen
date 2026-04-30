@@ -21,9 +21,8 @@
       import { MovieCategory } from "./component/MovieCategory/script.js";
       import { DataProfile } from "./data/dataProfile.js";
       
-      
+     
 
-      let movieData = await DataMovie.requestMovies();
       
       
 
@@ -39,8 +38,9 @@
       };
 
       C.handlerHome = async function () {
-      let moviedata = await DataMovie.requestMovies(); 
-      V.renderMovie(moviedata); };
+      let moviedata = await DataMovie.requestMovies(DataProfile.activeAge ); 
+      V.renderMovie(moviedata); 
+    }
 
     C.handlerDetail = async function (id) {
     let data = await DataMovie.requestMoviesDetail(id);
@@ -49,26 +49,35 @@
 
 
 C.handlerProfile = async function() {
-  
-    let ageselect = document.querySelector("#nom").value;
 
-
-    if (ageselect === "") {
+    let ageselect = document.querySelector("#nom");
+    DataProfile.activeAge  = ageselect.value;
+    
+    if (DataProfile.activeAge  == "") {
         let content = document.querySelector("#content");
-
-        content.innerHTML = "<h2>Bienvenue, veuillez choisir un profil</h2>";
+        content.innerHTML = "<h2>Bienvenue, veuillez choisir un profil.</h2>";
     } 
     else {
-   
-        let listfilms = await DataMovie.requestMovies(ageselect);
-
-        if (listfilms.length === 0) {
-            document.querySelector("#content").innerHTML = "<h2>Aucun film pour cet âge.</h2>";
+        let listfilms = await DataMovie.requestMovies(DataProfile.activeAge );
+        if (listfilms.length == 0) {
+            let content = document.querySelector("#content");
+            content.innerHTML = "<h2>Aucun film pour cet âge.</h2>";
         } else {
             V.renderMovie(listfilms);
         }
     }
 };
+
+
+C.handlerLogOut = function() {
+    // 1. On récupère le menu déroulant
+    let ageselect = document.querySelector("#nom");
+
+    ageselect.value = "";
+    
+    C.handlerProfile(); 
+};
+
 
 
       C.start = async function () {

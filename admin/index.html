@@ -10,6 +10,7 @@
     <section id="log"></section>
     <section id="addMovie"></section>
     <section id="addProfile"></section>
+    <section id="updateProfile"></section>
 
     <script type="module">
       import { MovieForm } from "./component/MovieForm/script.js";
@@ -18,9 +19,13 @@
       import { ProfileForm } from "./component/ProfileForm/script.js";
       import { DataProfile } from "./data/dataProfile.js";
 
+      import { ProfileEdit } from "./component/ProfileEdit/script.js";
+
       import { Log } from "./component/Log/script.js";
 
       let Category = await DataMovie.requestFilm();
+      let Profiles = await DataProfile.read(); // <--- AJOUTE CETTE LIGNE
+      
 
       window.C = {};
 
@@ -46,11 +51,24 @@
 
       }
 
+        C.handlerUpdateProfile = async function(){
+         
+            let form = document.querySelector('.updateProfile__form');
+            if (form.reportValidity()){
+            let fd = new FormData(form);
+            let res = await DataProfile.update(fd);
+            V.renderLog(res);
+            }
+
+      }
+
+
 
       C.start = function () {
         V.renderLog("Démarrage de l'application");
         V.renderMovie("C.handlerAddMovie()")
         V.renderProfile("C.handlerAddProfile()");
+        V.renderProfileEdit(Profiles, "C.handlerUpdateProfile()");
       };
 
       window.V = {};
@@ -68,6 +86,11 @@
         V.renderProfile = function (handler) {
         let content = document.querySelector("#addProfile");
         content.innerHTML = ProfileForm.format (handler);
+      };
+
+       V.renderProfileEdit = function (data, handler) {
+        let content = document.querySelector("#updateProfile");
+        content.innerHTML = ProfileEdit.format (data, handler);
       };
 
       C.start();

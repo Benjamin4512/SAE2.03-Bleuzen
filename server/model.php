@@ -6,11 +6,11 @@ define("DBLOGIN", "bleuzen1");
 define("DBPWD", "bleuzen1");
 
 
-function getAllMovies($age){
+function getAllMovies($valueage){
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
     $sql = "SELECT Movie.id, Movie.name, Movie.image, Category.name AS category_name FROM Movie, Category WHERE Movie.id_category = Category.id AND Movie.min_age <= :age";   
     $stmt = $cnx->prepare($sql);
-    $stmt->bindParam(':age', $age);
+    $stmt->bindParam(':age', $valueage);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_OBJ);
 }
@@ -98,3 +98,18 @@ $stmt->execute();
 return $stmt->fetchAll(PDO::FETCH_OBJ);
 }
    
+
+
+function updateProfile($id, $nom, $age_restriction){
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    
+    
+    $sql = "UPDATE Profile SET nom = :nom, age_restriction = :age_restriction WHERE id = :id";
+ 
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id', $id);
+    $stmt->bindParam(':nom', $nom);
+    $stmt->bindParam(':age_restriction', $age_restriction);
+    
+    return $stmt->execute(); 
+}
