@@ -22,8 +22,8 @@
     <h2 class="moviedetail__trailertext">Trailer</h2>
     <iframe src="{{moviedetailtrailer}}" frameborder="0"></iframe>
     
-    <h2 class="moviedetail__liketext">Mettre ce film en favoris</h2>
- 
-    <img src="{{moviedetailicon}}"  onclick="C.handlerAddFavoris()" class="moviedetail__like" alt="Icon">
+    <h2 class="moviedetail__favtext">{{mettrefavoris}}</h2>
+    <img src="{{moviedetailiconlike}}"  onclick="C.handlerAddFavoris()" class="moviedetail__like" alt="">
 
-</li>
+    <h2 class="moviedetail__deltext">{{retirerfavoris}}</h2>
+    <img src="{{moviedetailicontrash}}"  onclick="C.handlerDeleteFavoris()" class="moviedetail__trash" alt="">

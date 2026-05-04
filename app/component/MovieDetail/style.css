@@ -7,11 +7,22 @@
 
 .moviedetail__like{
   cursor: pointer;
-  color: red;
+  
 
 }
 
 .moviedetail__like:hover{
+  width: 2rem;
+
+}
+
+.moviedetail__trash{
+  cursor: pointer;
+  
+
+}
+
+.moviedetail__trash:hover{
   width: 2rem;
 
 }

@@ -52,8 +52,7 @@ function addProfile($nom, $age_restriction){
 
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
   
-    $sql = "INSERT INTO Profile (nom, age_restriction)
-            VALUES (:nom, :age_restriction)";
+    $sql = "INSERT INTO Profile (nom, age_restriction) VALUES (:nom, :age_restriction)";
  
     $stmt = $cnx->prepare($sql);
 
@@ -78,16 +77,15 @@ function addProfile($nom, $age_restriction){
     return $movie;
     }
 
-    function readCategory(){
 
+  function readCategory($id){
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-    $sql ="SELECT id, name from Category";
+    $sql = "SELECT * FROM Category WHERE id = :id"; 
     $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id', $id);
     $stmt->execute();
-    return  $stmt->fetchAll(PDO::FETCH_OBJ);
-    
-    }
-
+    return $stmt->fetch(PDO::FETCH_OBJ); 
+}
 
 
 function getAllProfile(){
@@ -102,10 +100,7 @@ return $stmt->fetchAll(PDO::FETCH_OBJ);
 
 function updateProfile($id, $nom, $age_restriction){
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-    
-    
     $sql = "UPDATE Profile SET nom = :nom, age_restriction = :age_restriction WHERE id = :id";
- 
     $stmt = $cnx->prepare($sql);
     $stmt->bindParam(':id', $id);
     $stmt->bindParam(':nom', $nom);
@@ -132,6 +127,24 @@ function readFavoris($id_profile) {
     $sql = "SELECT Movie.* FROM Movie INNER JOIN Favoris ON Movie.id = Favoris.id_movie WHERE Favoris.id_profile = :id_profile";
     $stmt = $cnx->prepare($sql);
     $stmt->bindParam(':id_profile', $id_profile);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
+function deleteFavoris($id_profile, $id_movie) {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "DELETE FROM Favoris WHERE id_profile = :id_profile AND id_movie = :id_movie";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id_profile', $id_profile);
+    $stmt->bindParam(':id_movie', $id_movie);
+    return $stmt->execute();
+}
+
+function getFeatured($age){
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT * FROM Movie WHERE featured = 1 AND min_age <= :age";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':age', $age);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_OBJ);
 }

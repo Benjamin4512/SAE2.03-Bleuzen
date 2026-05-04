@@ -114,7 +114,22 @@ function readFavorisController() {
     $id_profile = $_REQUEST['id_profile'];
     $favoris = readFavoris($id_profile);
     if($favoris != false){
-
     return $favoris;
 }
+}
+
+function deleteFavorisController(){
+  $id_profile = $_REQUEST ['id_profile'];
+  $id_movie = $_REQUEST ['id_movie'];
+  deleteFavoris($id_profile, $id_movie);
+
+  return "Le film a été retiré de vos favoris !";
+}
+
+function readFeaturedController(){
+    $age = $_REQUEST['age'];
+    $featured = getFeatured($age);
+   
+    return $featured;
+
 }

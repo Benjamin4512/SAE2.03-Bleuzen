@@ -1,147 +1,223 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <title>SAE2.03 APP</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./css/base.css" />
-  </head>
 
-  <body>
-    <header id="header"></header>
+<head>
+  <title>SAE2.03 APP</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./css/base.css" />
+</head>
 
-    <section id="content"></section>
-    <section id="profile"></section>
+<body>
+  <header id="header"></header>
+<section id="featured-content"></section>
+  <section id="content"></section>
+  <section id="profile"></section>
+   
+  
 
-    <script type="module">
-      import { NavBar } from "./component/NavBar/script.js";
-      import { Movie } from "./component/Movie/script.js";
-      import { DataMovie } from "./data/dataMovie.js";
-      import { MovieDetail } from "./component/MovieDetail/script.js";
-      import { MovieCategory } from "./component/MovieCategory/script.js";
-      import { DataProfile } from "./data/dataProfile.js";
-      
-     
+  <script type="module">
+    import { NavBar } from "./component/NavBar/script.js";
+    import { Movie } from "./component/Movie/script.js";
+    import { DataMovie } from "./data/dataMovie.js";
+    import { MovieDetail } from "./component/MovieDetail/script.js";
+    import { MovieCategory } from "./component/MovieCategory/script.js";
+    import { DataProfile } from "./data/dataProfile.js";
+    import { MovieFeatured } from "./component/MovieFeatured/script.js";
 
-      
-      
 
-      // Controleur
-      // Rappel, écrire window.C plutôt que let C est nécessaire pour tester depuis la console du navigateur
-      // Une fois l'application terminée, on pourrait remettre let C.
-      window.C = {};
 
-      C.handlerAbout = function () {
-        alert(
-          "Ceci est une base de projet pour la SAE2.03 édition 2025. Bonne chance !"
-        );
-      };
 
-      C.handlerHome = async function () {
-      let moviedata = await DataMovie.requestMovies(DataProfile.activeAge ); 
-      V.renderMovie(moviedata); 
+
+
+    // Controleur
+    // Rappel, écrire window.C plutôt que let C est nécessaire pour tester depuis la console du navigateur
+    // Une fois l'application terminée, on pourrait remettre let C.
+    window.C = {};
+
+    C.handlerAbout = function () {
+      alert(
+        "Ceci est une base de projet pour la SAE2.03 édition 2025. Bonne chance !"
+      );
+    };
+
+    C.handlerHome = async function () {
+     C.handlerProfile();
     }
 
-    C.handlerDetail = async function (id) {
-    let data = await DataMovie.requestMoviesDetail(id);
-    V.renderMovieDetail(data);
-};
+   C.handlerDetail = async function (id) {
+    document.querySelector("#featured-content").innerHTML = "";
+      let data = await DataMovie.requestMoviesDetail(id);
+      let favoris = await DataMovie.readFavoris(DataProfile.activeAge);
+      if (favoris == false) {
+          favoris = [];
+      }
+
+      V.renderMovieDetail(data, favoris);
+    };
 
 
-C.handlerProfile = async function() {
-
+C.handlerProfile = async function () {
     let ageselect = document.querySelector("#nom");
-    DataProfile.activeAge  = ageselect.value;
-    
-    if (DataProfile.activeAge  == "") {
+    DataProfile.activeAge = ageselect.value;
+
+    if (DataProfile.activeAge == "") {
         let content = document.querySelector("#content");
         content.innerHTML = "<h2>Bienvenue, veuillez choisir un profil.</h2>";
-    } 
-    else {
-        let listfilms = await DataMovie.requestMovies(DataProfile.activeAge );
+    } else {
+        let listfilms = await DataMovie.requestMovies(DataProfile.activeAge);
+
         if (listfilms.length == 0) {
             let content = document.querySelector("#content");
             content.innerHTML = "<h2>Aucun film pour cet âge.</h2>";
         } else {
-            V.renderMovie(listfilms);
+
+            let featureddata = await DataMovie.readFeatured(DataProfile.activeAge);
+            let featuredAffichage = {};
+
+            if (!featureddata) {
+                featuredAffichage["Films mis en avant"] = [];
+            } else {
+                featuredAffichage["Films mis en avant"] = featureddata;
+            }
+            V.renderMovieFeatured(featuredAffichage);
+
+            let favorisdata = await DataMovie.readFavoris(DataProfile.activeAge);
+            let favorisAffichage = {}; 
+            
+            if (!favorisdata) {
+                favorisAffichage["Mes Films Favoris"] = [];
+            } else {
+                favorisAffichage["Mes Films Favoris"] = favorisdata;
+            }
+
+            for (let nomCategory in listfilms) {
+                favorisAffichage[nomCategory] = listfilms[nomCategory]; 
+            }
+  
+            V.renderMovie(favorisAffichage);
         }
     }
 };
 
+    C.handlerLogOut = function () {
 
-C.handlerLogOut = function() {
-    
-    let ageselect = document.querySelector("#nom");
+      let ageselect = document.querySelector("#nom");
 
-    ageselect.value = "";
-    
-    C.handlerProfile(); 
-};
+      ageselect.value = "";
+
+      C.handlerProfile();
+    };
 
 
-   C.handlerAddFavoris = async function (id_movie) {
-    let id_profile = DataProfile.activeAge;
+    C.handlerAddFavoris = async function (id_movie) {
+      let id_profile = DataProfile.activeAge;
 
-    if (id_profile != "") {
+      if (id_profile != "") {
         let message = await DataMovie.addFavoris(id_profile, id_movie);
         alert(message);
-    } else {
+  
+      } else {
         alert("Veuillez choisir un profil pour ajouter des favoris.");
+      }
+
+    };
+
+    C.handlerReadFavoris = async function (){
+      let favoris = await DataMovie.readFavoris(DataProfile.activeAge);
+      let moviedata = await DataMovie.requestMovies(DataProfile.activeAge);
     }
+  
+
+    C.handlerDeleteFavoris = async function (id_movie){
+      let id_profile = DataProfile.activeAge;
+
+      if (id_profile != ""){
+        let message = await DataMovie.deleteFavoris(id_profile, id_movie);
+        alert(message);
+      } else{
+        alert("Veuillez choisir un profil pour supprimer des favoris")
+      }
+    }
+
+
+
+
+
+
+    C.start = async function () {
+      let profiles = await DataProfile.requestProfile();
+      V.renderNavBar("C.handlerAbout()", "C.handlerHome()", profiles);
+      document.querySelector("#content").innerHTML = "<h2>Bienvenue ! Veuillez choisir un profil.</h2>";
+    };
+
+    // Vue (contient tout ce qui est relatif à l'affichage)
+    window.V = {};
+
+    /**
+     * V.renderNavBar
+     *
+     * Cette fonction est responsable de l'affichage de la barre de navigation (NavBar).
+     * Elle sélectionne l'élément HTML avec l'ID "header" et y insère le contenu
+     * formaté par le composant NavBar.
+     */
+    V.renderNavBar = function (hAbout, hHome, profiles) {
+      let header = document.querySelector("#profile, #header");
+      header.innerHTML = NavBar.format(hAbout, hHome, profiles);
+    };
+
+   V.renderMovie = function (data) {
+      let content = document.querySelector("#content");
+      let finalHtml = "";
+
+      for (let categoryName in data) {
+        let categoryMovie = data[categoryName];
+
+        finalHtml += MovieCategory.format(categoryName, categoryMovie);
+      }
+
+      content.innerHTML = finalHtml;
+    };
+
+
+V.renderMovieFeatured = function (data) {
+  let content = document.querySelector("#featured-content");
+  let finalHtml = "";
+
+  for (let categoryName in data) {
+
+    finalHtml += `<h2>${categoryName}</h2>`; 
+
+  
+    let categoryMovie = data[categoryName];
+    finalHtml += MovieFeatured.format(categoryMovie); 
+  }
+
+  content.innerHTML = finalHtml;
 };
+  
+
+    V.renderMovieDetail = function (data, favoris) {
+      let content = document.querySelector("#content");
+      content.innerHTML = MovieDetail.format(data, favoris);
+    };
 
 
-      C.start = async function () {
-    let profiles = await DataProfile.requestProfile();
-    V.renderNavBar("C.handlerAbout()", "C.handlerHome()", profiles);
-    document.querySelector("#content").innerHTML = "<h2>Bienvenue ! Veuillez choisir un profil.</h2>";
-};
 
-      // Vue (contient tout ce qui est relatif à l'affichage)
-      window.V = {};
-
-      /**
-       * V.renderNavBar
-       *
-       * Cette fonction est responsable de l'affichage de la barre de navigation (NavBar).
-       * Elle sélectionne l'élément HTML avec l'ID "header" et y insère le contenu
-       * formaté par le composant NavBar.
-       */
-      V.renderNavBar = function (hAbout, hHome, profiles) {
-        let header = document.querySelector("#profile, #header");
-        header.innerHTML = NavBar.format(hAbout, hHome, profiles);
-      };
-
-       V.renderMovie = function (data) {
-        let content = document.querySelector("#content");
-        let finalHtml ="";
-        for (let categoryName in data){
-          let categoryMovie = data[categoryName];
-          finalHtml += MovieCategory.format(categoryName, categoryMovie);
-        }
-        content.innerHTML = finalHtml;
-
-      };
-
-        V.renderMovieDetail = function (data) {
-        let content = document.querySelector("#content");
-        content.innerHTML = MovieDetail.format(data);
-      };
-
-
-      
-     /*   V.renderMovieCategory = function (handler, category) {
-        let content = document.querySelector("#content");
-        content.innerHTML = MovieCategory.format(handler, category);
-      };*/
+    /*   V.renderMovieCategory = function (handler, category) {
+       let content = document.querySelector("#content");
+       content.innerHTML = MovieCategory.format(handler, category);
+     };*/
 
 
 
 
 
-      C.start(); // Démarre l'application
 
-    </script>
-  </body>
+    C.start(); // Démarre l'application
+
+  </script>
+</body>
+
 </html>
 <script type="module"></script>

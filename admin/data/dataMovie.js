@@ -1,5 +1,5 @@
 
-let HOST_URL = "../..";
+let HOST_URL = "https://mmi.unilim.fr/~bleuzen1/SAE2.03-Bleuzen";
 
 let DataMovie = {};
 
