@@ -146,5 +146,49 @@ function getFeatured($age){
     $stmt = $cnx->prepare($sql);
     $stmt->bindParam(':age', $age);
     $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_OBJ);
+    return $stmt->fetch(PDO::FETCH_OBJ);
 }
+
+
+function getNumberProfile(){
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT COUNT(*) AS total FROM Profile";
+    $stmt = $cnx->prepare($sql);
+	$stmt->execute();
+	return $stmt->fetch(PDO::FETCH_ASSOC);
+}   
+
+function getAvgMovieByProfileInFavoris(){
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT AVG(favoris_by_profil) as average_by_favoris FROM (SELECT COUNT(*) AS favoris_by_profil FROM Favoris GROUP BY id_profile) AS avg_movie_by_profile_in_favoris";
+    $stmt = $cnx->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_OBJ);
+
+}
+
+function getAllMovie(){
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT COUNT(*) AS all_movie FROM Movie";
+    $stmt = $cnx->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_OBJ);
+}
+
+function getMostMovieInFavoris(){
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT Movie.name, COUNT(id_movie) AS all_fav FROM Favoris JOIN Movie ON Favoris.id_movie = Movie.id GROUP BY id_movie ORDER BY all_fav DESC LIMIT 1"; 
+    $stmt = $cnx->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_OBJ);
+}
+
+
+function getCategoryPopular(){
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT Category.name, COUNT(Favoris.id_movie) AS nb_fav FROM Favoris INNER JOIN Movie ON Favoris.id_movie = Movie.id INNER JOIN Category ON Movie.id_category = Category.id GROUP BY Category.id ORDER BY nb_fav DESC LIMIT 1"; 
+    $stmt = $cnx->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_OBJ);
+}
+

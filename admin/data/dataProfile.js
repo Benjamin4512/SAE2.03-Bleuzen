@@ -1,5 +1,5 @@
 
-let HOST_URL = "../.."/*"https://mmi.unilim.fr/~bleuzen1/SAE2.03-Bleuzen" */;
+let HOST_URL = "https://mmi.unilim.fr/~bleuzen1/SAE2.03-Bleuzen";
 
 let DataProfile = {};
 
@@ -9,7 +9,7 @@ DataProfile.add = async function (fdata) {
         method: "POST", 
         body: fdata 
     };
-    let answer = await fetch(HOST_URL + "../server/script.php?todo=addProfile", config);
+    let answer = await fetch(HOST_URL + "/server/script.php?todo=addProfile", config);
     let data = await answer.json();
     return data;
 }
@@ -20,14 +20,14 @@ DataProfile.update = async function (fdata) {
         method: "POST", 
         body: fdata 
     };
-    let answer = await fetch(HOST_URL + "../server/script.php?todo=updateProfile", config);
+    let answer = await fetch(HOST_URL + "/server/script.php?todo=updateProfile", config);
     let data = await answer.json();
     return data;
 }
 
 
 DataProfile.read = async function () {
-    let answer = await fetch(HOST_URL + "../server/script.php?todo=readProfile");
+    let answer = await fetch(HOST_URL + "/server/script.php?todo=readProfile");
     return await answer.json();
 }
 

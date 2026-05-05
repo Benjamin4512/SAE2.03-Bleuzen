@@ -24,6 +24,7 @@
     import { MovieCategory } from "./component/MovieCategory/script.js";
     import { DataProfile } from "./data/dataProfile.js";
     import { MovieFeatured } from "./component/MovieFeatured/script.js";
+    import { AppStats } from "./component/AppStats/script.js";
 
 
 
@@ -105,6 +106,7 @@ C.handlerProfile = async function () {
       let ageselect = document.querySelector("#nom");
 
       ageselect.value = "";
+      document.querySelector("#featured-content").innerHTML = "";
 
       C.handlerProfile();
     };
@@ -140,14 +142,16 @@ C.handlerProfile = async function () {
       }
     }
 
-
-
+ C.handlerStats = async function () {
+      let allStats = await DataMovie.readAllStats();
+      V.renderStats(allStats);
+    };
 
 
 
     C.start = async function () {
       let profiles = await DataProfile.requestProfile();
-      V.renderNavBar("C.handlerAbout()", "C.handlerHome()", profiles);
+      V.renderNavBar("C.handlerAbout()", "C.handlerHome()", profiles, "C.handlerStats()");
       document.querySelector("#content").innerHTML = "<h2>Bienvenue ! Veuillez choisir un profil.</h2>";
     };
 
@@ -161,16 +165,22 @@ C.handlerProfile = async function () {
      * Elle sélectionne l'élément HTML avec l'ID "header" et y insère le contenu
      * formaté par le composant NavBar.
      */
-    V.renderNavBar = function (hAbout, hHome, profiles) {
+
+    V.renderStats = function (allStats){
+       let content = document.querySelector("#content");
+      content.innerHTML = AppStats.format(allStats);
+    }
+
+    V.renderNavBar = function (hAbout, hHome, profiles, hStats) {
       let header = document.querySelector("#profile, #header");
-      header.innerHTML = NavBar.format(hAbout, hHome, profiles);
+      header.innerHTML = NavBar.format(hAbout, hHome, profiles, hStats);
     };
 
    V.renderMovie = function (data) {
       let content = document.querySelector("#content");
       let finalHtml = "";
 
-      for (let categoryName in data) {
+      for (let categoryName in data) {  
         let categoryMovie = data[categoryName];
 
         finalHtml += MovieCategory.format(categoryName, categoryMovie);
@@ -182,18 +192,14 @@ C.handlerProfile = async function () {
 
 V.renderMovieFeatured = function (data) {
   let content = document.querySelector("#featured-content");
-  let finalHtml = "";
-
-  for (let categoryName in data) {
-
-    finalHtml += `<h2>${categoryName}</h2>`; 
-
   
-    let categoryMovie = data[categoryName];
-    finalHtml += MovieFeatured.format(categoryMovie); 
-  }
+ 
+  let html = "<h2>Films en Vedette</h2>";
+  let mesFilms = data["Films mis en avant"];
 
-  content.innerHTML = finalHtml;
+  html = html + MovieFeatured.format(mesFilms);
+
+  content.innerHTML = html;
 };
   
 

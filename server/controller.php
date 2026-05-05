@@ -133,3 +133,41 @@ function readFeaturedController(){
     return $featured;
 
 }
+
+function readAllStatsController(){
+   return [
+    getNumberProfile(),
+    getAvgMovieByProfileInFavoris(),
+    getAllMovie(),
+    getMostMovieInFavoris(),
+    getCategoryPopular()
+   ];
+}
+
+
+
+/*function readNumberProfileController(){
+  $number = getNumberProfile();
+  return $number;
+
+}
+
+function readAvgMovieByProfileInFavorisController(){
+  $average = getAvgMovieByProfileInFavoris();
+  return $average;
+}
+
+function readAllMovieController(){
+  $all = getAllMovie();
+  return $all;
+}
+
+function readMostMovieInFavorisController(){
+  $most = getMostMovieInFavoris();
+  return $most;
+}
+
+function readCategoryPopularController(){
+  $popular = getCategoryPopular();
+  return $popular;
+}*/
