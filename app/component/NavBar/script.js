@@ -6,11 +6,12 @@ let templateLi = await templateLiFile.text();
 
 let NavBar = {};
 
-NavBar.format = function (hAbout, hHome, profiles, hStats) {
+NavBar.format = function (hAbout, hHome, profiles, hStats, hSearch) {
   let html = template;
   html = html.replace("{{hHome}}", hHome);
   html = html.replace("{{hAbout}}", hAbout);
   html = html.replace("{{hStats}}", hStats);
+  html = html.replace("{{hSearch}}", hSearch);
 
 let menuHTML ="";
  for (let profile of profiles){

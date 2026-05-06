@@ -4,6 +4,11 @@
      <li class="navbar__item" onclick="{{hHome}}">Accueil</li>
       <li class="navbar__item" onclick="{{hStats}}">Statistiques</li>
   </ul>
+
+  <div class="search">
+    <input type="text" placeholder="Rechercher un film" onkeyup="{{hSearch}}"></imput>
+  </div>
+
    <div>
      <select required id="nom" onchange="C.handlerProfile()">
       <option value="">--Choisir un profil--</option>

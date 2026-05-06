@@ -146,7 +146,7 @@ function getFeatured($age){
     $stmt = $cnx->prepare($sql);
     $stmt->bindParam(':age', $age);
     $stmt->execute();
-    return $stmt->fetch(PDO::FETCH_OBJ);
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
 }
 
 
@@ -192,3 +192,11 @@ function getCategoryPopular(){
     return $stmt->fetch(PDO::FETCH_OBJ);
 }
 
+
+function readSearch($search){
+     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+     $sql = "SELECT *FROM Movie WHERE name LIKE '%$search%'";
+     $stmt = $cnx->prepare($sql);
+     $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}

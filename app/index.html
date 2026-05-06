@@ -10,7 +10,8 @@
 
 <body>
   <header id="header"></header>
-<section id="featured-content"></section>
+  <section id="search-input"></section>
+  <section id="featured-content"></section>
   <section id="content"></section>
   <section id="profile"></section>
    
@@ -46,6 +47,31 @@
      C.handlerProfile();
     }
 
+C.handlerSearch = async function () {
+    // Utilise un sélecteur plus précis pour éviter de confondre avec ta <section>
+    let inputElement = document.querySelector(".search input");
+    let query = inputElement.value;
+
+    if (query.length > 0) {
+        document.querySelector("#featured-content").innerHTML = "";
+
+        let results = await DataMovie.readSearch(query);
+
+        // On vérifie si results existe ET est un tableau avant le .length
+        if (results && results.length > 0) {
+            let searchData = {};
+            searchData["Résultats pour : " + query] = results;
+            V.renderMovie(searchData);
+        } else {
+            // Si results est vide ou undefined
+            document.querySelector("#content").innerHTML = "<h2>Aucun film trouvé.</h2>";
+        }
+    } else {
+        C.handlerProfile();
+    }
+};
+
+      
    C.handlerDetail = async function (id) {
     document.querySelector("#featured-content").innerHTML = "";
       let data = await DataMovie.requestMoviesDetail(id);
@@ -142,16 +168,21 @@ C.handlerProfile = async function () {
       }
     }
 
- C.handlerStats = async function () {
-      let allStats = await DataMovie.readAllStats();
-      V.renderStats(allStats);
-    };
+C.handlerStats = async function () {
+  
+    document.querySelector("#featured-content").innerHTML = "";
 
+
+    let allStats = await DataMovie.readAllStats();
+
+
+    V.renderStats(allStats);
+};
 
 
     C.start = async function () {
       let profiles = await DataProfile.requestProfile();
-      V.renderNavBar("C.handlerAbout()", "C.handlerHome()", profiles, "C.handlerStats()");
+      V.renderNavBar("C.handlerAbout()", "C.handlerHome()", profiles, "C.handlerStats()", "C.handlerSearch()");
       document.querySelector("#content").innerHTML = "<h2>Bienvenue ! Veuillez choisir un profil.</h2>";
     };
 
@@ -171,9 +202,10 @@ C.handlerProfile = async function () {
       content.innerHTML = AppStats.format(allStats);
     }
 
-    V.renderNavBar = function (hAbout, hHome, profiles, hStats) {
+
+    V.renderNavBar = function (hAbout, hHome, profiles, hStats, hSearch) {
       let header = document.querySelector("#profile, #header");
-      header.innerHTML = NavBar.format(hAbout, hHome, profiles, hStats);
+      header.innerHTML = NavBar.format(hAbout, hHome, profiles, hStats, hSearch);
     };
 
    V.renderMovie = function (data) {
@@ -210,14 +242,7 @@ V.renderMovieFeatured = function (data) {
 
 
 
-    /*   V.renderMovieCategory = function (handler, category) {
-       let content = document.querySelector("#content");
-       content.innerHTML = MovieCategory.format(handler, category);
-     };*/
-
-
-
-
+ 
 
 
     C.start(); // Démarre l'application

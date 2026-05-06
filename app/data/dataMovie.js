@@ -47,6 +47,12 @@ DataMovie.readAllStats = async function () {
     return data;
 }
 
+DataMovie.readSearch = async function (query) {
+    let answer = await fetch(HOST_URL + "/server/script.php?todo=readSearch&search=" + query);
+    let data = await answer.json();
+    return data;
+}
+
 
 
 export {DataMovie};

@@ -145,29 +145,8 @@ function readAllStatsController(){
 }
 
 
-
-/*function readNumberProfileController(){
-  $number = getNumberProfile();
-  return $number;
-
+function readSearchController(){
+  $search = $_REQUEST['search'];
+  $s = readSearch($search);
+  return $s;
 }
-
-function readAvgMovieByProfileInFavorisController(){
-  $average = getAvgMovieByProfileInFavoris();
-  return $average;
-}
-
-function readAllMovieController(){
-  $all = getAllMovie();
-  return $all;
-}
-
-function readMostMovieInFavorisController(){
-  $most = getMostMovieInFavoris();
-  return $most;
-}
-
-function readCategoryPopularController(){
-  $popular = getCategoryPopular();
-  return $popular;
-}*/
