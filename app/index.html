@@ -48,24 +48,17 @@
     }
 
 C.handlerSearch = async function () {
-    // Utilise un sélecteur plus précis pour éviter de confondre avec ta <section>
-    let inputElement = document.querySelector(".search input");
-    let query = inputElement.value;
+    let query = document.querySelector(".search").value;
 
     if (query.length > 0) {
         document.querySelector("#featured-content").innerHTML = "";
-
+        
         let results = await DataMovie.readSearch(query);
+        let searchData = {};
+        
+        searchData[""] = results;
 
-        // On vérifie si results existe ET est un tableau avant le .length
-        if (results && results.length > 0) {
-            let searchData = {};
-            searchData["Résultats pour : " + query] = results;
-            V.renderMovie(searchData);
-        } else {
-            // Si results est vide ou undefined
-            document.querySelector("#content").innerHTML = "<h2>Aucun film trouvé.</h2>";
-        }
+        V.renderMovie(searchData);
     } else {
         C.handlerProfile();
     }
@@ -210,28 +203,13 @@ C.handlerStats = async function () {
 
    V.renderMovie = function (data) {
       let content = document.querySelector("#content");
-      let finalHtml = "";
-
-      for (let categoryName in data) {  
-        let categoryMovie = data[categoryName];
-
-        finalHtml += MovieCategory.format(categoryName, categoryMovie);
-      }
-
-      content.innerHTML = finalHtml;
+      content.innerHTML = Movie.format(data);
     };
 
 
 V.renderMovieFeatured = function (data) {
   let content = document.querySelector("#featured-content");
-  
- 
-  let html = "<h2>Films en Vedette</h2>";
-  let mesFilms = data["Films mis en avant"];
-
-  html = html + MovieFeatured.format(mesFilms);
-
-  content.innerHTML = html;
+  contentinnerHTML = MovieFeatured.format(data)
 };
   
 
