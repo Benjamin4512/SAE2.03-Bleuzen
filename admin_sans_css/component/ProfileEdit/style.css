@@ -1,0 +1,14 @@
+.updateProfile__form{
+    display: flex;
+    flex-direction: column;
+    padding-top: 1.5rem;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+@media (min-width:60em){
+    .updateProfile__form{
+        width: 40%;
+    }
+
+}

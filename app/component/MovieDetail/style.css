@@ -1,28 +1,85 @@
 .moviedetail__img{
-  width: 50%;
-  height: 50%;
-  aspect-ratio: 2/3;
+  width: 100%;
+  aspect-ratio: 4/2;
   object-fit: cover;
+}
+
+
+
+
+.moviedetail__name{
+
+  top: 20%;
+  padding-left: 1rem;
+  width: 20%;
+  size: 2rem;
+}
+
+.moviedetail__content{
+  display: flex;
+  flex-direction: column;
+  
+  gap: 1rem;
+}
+
+
+.moviedetail__name{
+  color: var(--color-element);
+}
+
+.moviedetail__min-age{
+  background-color: var(--color-element);
+  width: 5%;
 }
 
 .moviedetail__like{
   cursor: pointer;
+  width: 2rem;
+  color: var(--color-white);
+  background-color: var(--color-element);
   
 
 }
 
 .moviedetail__like:hover{
-  width: 2rem;
+  width: 3rem;
 
 }
 
 .moviedetail__trash{
   cursor: pointer;
+  width: 2rem;
+  background-color: var(--color-element);
   
 
 }
 
 .moviedetail__trash:hover{
-  width: 2rem;
+  width: 3rem;
+}
 
+@media (min-width: 44em){
+  .moviedetail__img{
+    aspect-ratio: 5/2;
+  }
+
+  .moviedetail__content{
+    padding: 1rem;
+    gap: 2rem;
+    width: 50%;
+  }
+
+  .moviedetail__name{
+    position: absolute;
+    top: 10%;
+    font-size: 5rem;
+  }
+
+  .moviedetail__trailer{
+   height: auto;
+  }
+
+  .moviedetail__min-age{
+    width: 3%;
+  }
 }

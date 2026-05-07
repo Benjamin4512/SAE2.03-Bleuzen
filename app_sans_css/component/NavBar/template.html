@@ -1,0 +1,29 @@
+<nav class="navbar font-sans">
+  <div class="navbar__header">
+    <img src="" alt="Filmtastic" class="navbar__logo">
+    <svg class="navbar__menu" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 6H20M4 12H20M4 18H20" stroke="#1B1A1A" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" />
+    </svg>
+  </div>
+
+  <div class="navbar__content">
+    <ul class="navbar__list">
+      <li class="navbar__item" onclick="{{hAbout}}">About</li>
+      <li class="navbar__item" onclick="{{hHome}}">Accueil</li>
+      <li class="navbar__item" onclick="{{hStats}}">Statistiques</li>
+    </ul>
+
+    <div class="navbar__search">
+      <input type="text" placeholder="Rechercher un film" onkeyup="{{hSearch}}">
+    </div>
+
+    <div class="navbar__profile">
+      <select required id="nom" onchange="C.handlerProfile()" class="navbar__select">
+        <option value="">Profil</option>
+        {{profileItems}}
+      </select>
+      <input type="button" value="Déconnexion" onclick="C.handlerLogOut()" id="btn-deconnexion" class="navbar__btn">
+    </div>
+  </div>
+</nav>

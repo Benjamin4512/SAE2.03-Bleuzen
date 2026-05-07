@@ -1,0 +1,28 @@
+.moviedetail__img{
+  width: 50%;
+  height: 50%;
+  aspect-ratio: 2/3;
+  object-fit: cover;
+}
+
+.moviedetail__like{
+  cursor: pointer;
+  
+
+}
+
+.moviedetail__like:hover{
+  width: 2rem;
+
+}
+
+.moviedetail__trash{
+  cursor: pointer;
+  
+
+}
+
+.moviedetail__trash:hover{
+  width: 2rem;
+
+}

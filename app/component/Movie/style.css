@@ -4,19 +4,24 @@
 
 
 
-.movie__list{
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  padding-top: 2rem;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  scroll-snap-type: x mandatory;
+
+ .movie__list {
+  display: flex;
+  flex-direction: row; 
+  gap: 1.5rem;         
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
   
   .movie__img{
+
   width: 100%;
-  aspect-ratio: 2/3;
+  aspect-ratio: 3/2;
   object-fit: cover;
   cursor: pointer;
+
  /* height: 100%;*/
 
 }
@@ -25,10 +30,16 @@
   padding-bottom: 1rem;
 }
 
-
-
-
+.movie__accueil{
+  display: flex;
+  justify-content: center;
+  padding-top: 10rem;
 }
+
+
+
+
+
 
 @media (min-width: 44em){
   .movie__list{

@@ -2,13 +2,11 @@
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   padding-top: 2rem;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  scroll-snap-type: x mandatory;
+  
   
   .movie__img{
   width: 100%;
-  aspect-ratio: 2/3;
+  aspect-ratio: 3/2;
   object-fit: cover;
   cursor: pointer;
  /* height: 100%;*/

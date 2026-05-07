@@ -1,13 +1,51 @@
 *,
-*::after,
-*::before {
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-
-
-ul {
-  padding: 0;
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
   margin: 0;
+  font-family: "Montserrat";
+}
+
+/* Remove list styles on ul */
+ul,
+ol {
   list-style: none;
+  padding: 0;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+body {
+background-color: var(--color-bg);
+
+}
+
+
+h2,
+h3 {
+  font-weight: var(--fw-600);
+  color: var(--color-fg);
+  text-decoration: uppercase;
+}
+
+p {
+  color: var(--color-fg);
 }

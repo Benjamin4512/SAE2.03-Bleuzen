@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <header id="header"></header>
+  <header id="header" class="menu__open"></header>
   <section id="search-input"></section>
   <section id="featured-content"></section>
   <section id="content"></section>
@@ -48,22 +48,28 @@
     }
 
 C.handlerSearch = async function () {
-    let query = document.querySelector(".search").value;
+   
+    let inputElement = document.querySelector(".navbar__seach");
+    let query = inputElement.value;
 
     if (query.length > 0) {
         document.querySelector("#featured-content").innerHTML = "";
-        
-        let results = await DataMovie.readSearch(query);
-        let searchData = {};
-        
-        searchData[""] = results;
 
-        V.renderMovie(searchData);
+        let results = await DataMovie.readSearch(query);
+
+    
+        if (results && results.length > 0) {
+            let searchData = {};
+            searchData["Résultats pour : " + query] = results;
+            V.renderMovie(searchData);
+        } else {
+         
+            document.querySelector("#content").innerHTML = "<h2>Aucun film trouvé.</h2>";
+        }
     } else {
         C.handlerProfile();
     }
 };
-
       
    C.handlerDetail = async function (id) {
     document.querySelector("#featured-content").innerHTML = "";
@@ -79,11 +85,16 @@ C.handlerSearch = async function () {
 
 C.handlerProfile = async function () {
     let ageselect = document.querySelector("#nom");
+    DataProfile.activeAge  = ageselect.value;
+    
+    if (DataProfile.activeAge  == "") {
     DataProfile.activeAge = ageselect.value;
 
     if (DataProfile.activeAge == "") {
         let content = document.querySelector("#content");
-        content.innerHTML = "<h2>Bienvenue, veuillez choisir un profil.</h2>";
+        content.innerHTML = '<h2 class="movie__empty">Bienvenue ! Veuillez choisir un profil.</h2>';
+    } 
+
     } else {
         let listfilms = await DataMovie.requestMovies(DataProfile.activeAge);
 
@@ -91,6 +102,7 @@ C.handlerProfile = async function () {
             let content = document.querySelector("#content");
             content.innerHTML = "<h2>Aucun film pour cet âge.</h2>";
         } else {
+            V.renderMovie(listfilms);
 
             let featureddata = await DataMovie.readFeatured(DataProfile.activeAge);
             let featuredAffichage = {};
@@ -164,11 +176,7 @@ C.handlerProfile = async function () {
 C.handlerStats = async function () {
   
     document.querySelector("#featured-content").innerHTML = "";
-
-
     let allStats = await DataMovie.readAllStats();
-
-
     V.renderStats(allStats);
 };
 
@@ -176,7 +184,7 @@ C.handlerStats = async function () {
     C.start = async function () {
       let profiles = await DataProfile.requestProfile();
       V.renderNavBar("C.handlerAbout()", "C.handlerHome()", profiles, "C.handlerStats()", "C.handlerSearch()");
-      document.querySelector("#content").innerHTML = "<h2>Bienvenue ! Veuillez choisir un profil.</h2>";
+      document.querySelector("#content").innerHTML = '<h2 class="movie__empty">Bienvenue ! Veuillez choisir un profil.</h2>';
     };
 
     // Vue (contient tout ce qui est relatif à l'affichage)
@@ -190,34 +198,46 @@ C.handlerStats = async function () {
      * formaté par le composant NavBar.
      */
 
-    V.renderStats = function (allStats){
-       let content = document.querySelector("#content");
-      content.innerHTML = AppStats.format(allStats);
+// --- Les Vues (V.render) ---
+
+V.renderNavBar = function (hAbout, hHome, profiles, hStats, hSearch) {
+    let header = document.querySelector("#header");
+    header.innerHTML = NavBar.format(hAbout, hHome, profiles, hStats, hSearch);
+};
+
+V.renderMovie = function (data) {
+    let content = document.querySelector("#content");
+    let finalHtml = "";
+
+    for (let categoryName in data) {  
+        let categoryMovie = data[categoryName];
+        finalHtml += MovieCategory.format(categoryName, categoryMovie);
     }
 
-
-    V.renderNavBar = function (hAbout, hHome, profiles, hStats, hSearch) {
-      let header = document.querySelector("#profile, #header");
-      header.innerHTML = NavBar.format(hAbout, hHome, profiles, hStats, hSearch);
-    };
-
-   V.renderMovie = function (data) {
-      let content = document.querySelector("#content");
-      content.innerHTML = Movie.format(data);
-    };
-
+    content.innerHTML = finalHtml;
+  
+};
 
 V.renderMovieFeatured = function (data) {
-  let content = document.querySelector("#featured-content");
-  contentinnerHTML = MovieFeatured.format(data)
-};
+    let content = document.querySelector("#featured-content");
+    let html = "<h2>Films en Vedette</h2>";
+    let mesFilms = data["Films mis en avant"];
+
+    html = html + MovieFeatured.format(mesFilms);
+
+    content.innerHTML = html;
   
+};
 
-    V.renderMovieDetail = function (data, favoris) {
-      let content = document.querySelector("#content");
-      content.innerHTML = MovieDetail.format(data, favoris);
-    };
+V.renderMovieDetail = function (data, favoris) {
+    let content = document.querySelector("#content");
+    content.innerHTML = MovieDetail.format(data, favoris);
+};
 
+V.renderStats = function (allStats) {
+    let content = document.querySelector("#content");
+    content.innerHTML = AppStats.format(allStats);
+};
 
 
  
@@ -230,3 +250,4 @@ V.renderMovieFeatured = function (data) {
 
 </html>
 <script type="module"></script>
+

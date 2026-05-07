@@ -1,9 +1,9 @@
 <?php
 
 define("HOST", "localhost");
-define("DBNAME", "bleuzen1");
-define("DBLOGIN", "bleuzen1");
-define("DBPWD", "bleuzen1");
+define("DBNAME", "SAE203");
+define("DBLOGIN", "usersae203");
+define("DBPWD", "Limoges1!");
 
 
 function getAllMovies($valueage){

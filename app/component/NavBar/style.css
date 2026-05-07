@@ -1,26 +1,128 @@
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 3rem;
-  color: var(--color-fg);
-  background-color: var(--color-bg);
+  --_bg: var(--color-gray);
+  --_fg: var(--color-fg);
 
-  .navbar__item {
-    --_offset: 0.2rem;
-    padding: 0.5rem 1rem;
-    text-decoration: underline;
-    text-decoration-thickness: 0.1rem;
-    text-underline-offset: var(--_offset);
-    cursor: pointer;
-    transition: text-underline-offset 0.2s ease-in-out;
-    &:hover {
-      --_offset: 0.5rem;
-    }
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  left: 50%;
+  width: 18rem;
+  padding: 1rem;
+  background-color: var(--_bg);
+  color: var(--_fg);
+  border-radius: 0 0 2rem 2rem;
+  transform: translateX(-50%);
+
+
+  .navbar__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
   }
 
-  .navbar__list{
+  .navbar__logo {
+    height: 1.8rem;
+    width: auto;
+  }
+
+  .navbar__menu {
+    height: 1.7rem;
+    cursor: pointer;
+
+  
+  }
+
+  .navbar__content {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 1rem;
+    gap: 1.5rem;
+  }
+
+ 
+
+  .navbar__list {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .navbar__item {
+    font-size: 1rem;
+    cursor: pointer;
+
+  }
+
+
+  .navbar__search-input, .navbar__select, .navbar__btn {
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: var(--color-black);
+    color: var(--color-white);
+  
+    font-size: 1rem;
+  
+   
+   
+  }
+
+  .navbar__btn {
+    background-color: var(--color-element);
+    border: none;
+    cursor: pointer;
+
+  }
+
+  .navbar__profile {
+    display: flex;
+    gap: 0.75rem;
+  }
+}
+
+@media (min-width: 44em) {
+  .navbar {
     flex-direction: row;
+    width: 100%;
+    max-width: 80rem;
+    padding: 1rem 2rem;
+
+    .navbar__header {
+      width: auto;
+    }
+
+    .navbar__menu {
+      display: none;
+    }
+
+    .navbar__content {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding-left: 2rem;
+      margin-top: 0;
+      gap: 2rem;
+    }
+
+    .navbar__list {
+      flex-direction: row;
+      gap: 2rem;
+    }
+
+    .navbar__search {
+
+      display: flex;
+      justify-content: center;
+
+
+     
+    }
   }
 }

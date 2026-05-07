@@ -1,0 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,700&display=swap");
+
+:root {
+  /* Primitive Tokens */
+  --color-black: hsl(0, 19%, 7%);
+  --color-red: hsl(348, 100%, 45%);
+  --color-gray: hsl(0, 6%, 16%);
+  --color-white: hsl(0, 0%, 100%);
+
+  --ff-sans: "DM sans", sans-serif;
+
+  /* Sementic Tokens */
+  --color-fg: var(--color-white);
+  --color-bg: var(--color-black);
+  --color-element: var(--color-red);
+}

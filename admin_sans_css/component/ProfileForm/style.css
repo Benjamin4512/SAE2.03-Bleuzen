@@ -1,0 +1,19 @@
+.addProfile{
+   padding: 3rem 0 3rem 0;
+}
+
+.addProfile__form{
+  
+    display: flex;
+    flex-direction: column;
+    padding-top: 1.5rem;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+@media (min-width:60em){
+    .addProfile__form{
+        width: 40%;
+    }
+
+}

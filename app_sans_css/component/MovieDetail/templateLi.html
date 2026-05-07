@@ -1,0 +1,29 @@
+<li class="moviedetail_item">
+
+    <h1 class="moviedetail__name">{{moviedetailname}}</h1>
+
+    <h2 class="moviedetail__realisateurtext">Réalisateur</h2>
+    <h3 class="moviedetail__realisateur">{{moviedetaildirector}}</h3>
+
+    <img src="{{moviedetailimage}}" alt="Image" class="moviedetail__img">
+
+    <h2 class="moviedetail__yeartext">Année de Sortie</h2>
+    <p class="moviedetail__year">{{moviedetailyear}}</p>
+
+    <h2 class="moviedetail__categorytext">Catégorie</h2>
+    <p class="moviedetailcategory">{{moviedetailcategory}}</p>
+
+    <h2 class="moviedetail__min-agetext">Age Minimal</h2>
+    <p class="moviedetail__min-age">{{moviedetailminage}}</p>
+
+    <h2 class="moviedetail__descriptiontext">Description</h2>
+    <p class="moviedetail__description">{{moviedetaildescription}}</p>
+
+    <h2 class="moviedetail__trailertext">Trailer</h2>
+    <iframe src="{{moviedetailtrailer}}" frameborder="0"></iframe>
+    
+    <h2 class="moviedetail__favtext">{{mettrefavoris}}</h2>
+    <img src="{{moviedetailiconlike}}"  onclick="C.handlerAddFavoris()" class="moviedetail__like" alt="">
+
+    <h2 class="moviedetail__deltext">{{retirerfavoris}}</h2>
+    <img src="{{moviedetailicontrash}}"  onclick="C.handlerDeleteFavoris()" class="moviedetail__trash" alt="">
